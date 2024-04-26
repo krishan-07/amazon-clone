@@ -41,7 +41,7 @@ products.forEach((product) => {
 
   <div class="product-spacer"></div>
 
-  <div class="added-to-cart">
+  <div class="added-to-cart" id="js-added-to-cart-${product.id}">
     <img src="images/icons/checkmark.png">
     Added
   </div>
@@ -54,12 +54,13 @@ products.forEach((product) => {
 </div>`;
 });
 //putting html into he webpage
-document.getElementById("js-product-grid").innerHTML = productHTML;
+document.getElementById('js-product-grid').innerHTML = productHTML;
 
-document.querySelectorAll(".js-add-to-cart").forEach((button) => {
-  button.addEventListener("click", () => {
-    const productId = button.dataset.productId;
-
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+let addedButtonTimeoutId;
+  button.addEventListener('click', () => {
+    // const productId = button.dataset.productId;
+    const{productId} = button.dataset;
     let matchingItem;
 
     cart.forEach((item) => {
@@ -68,18 +69,32 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     });
 
     //getting the quantity by dropdown selector
-    const quantity = Number( document.getElementById(`js-selector-${productId}`).value);
-    
-    //updating the cart 
+    const quantity = Number(
+      document.getElementById(`js-selector-${productId}`).value
+    );
+
+    //updating the cart
     if (matchingItem) matchingItem.quantity += quantity;
     else cart.push({ productId: productId, quantity: quantity });
-    
+
     //updating the total cart quatity
     let cartQuantity = 0;
-    cart.forEach((item)=>{
+    cart.forEach((item) => {
       cartQuantity += item.quantity;
-    })
+    });
 
     document.getElementById('js-cart-quantity').innerText = cartQuantity;
+
+    //making added to cart visible on click
+    const addedToCart = document.getElementById(`js-added-to-cart-${productId}`);
+    addedToCart.classList.add('added-to-cart-visible');
+
+    if(addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
+
+    let timeoutId = setTimeout(() => {
+    addedToCart.classList.remove('added-to-cart-visible');
+    }, 2000);
+
+    addedButtonTimeoutId = timeoutId;
   });
 });
