@@ -69,7 +69,13 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
 
     if (matchingItem) matchingItem.quantity += 1;
     else cart.push({ productId: productId, quantity: 1 });
-    console.log(matchingItem);
-    console.log(cart);
+    
+    //updating total cart quatity
+    cartQuantity = 0;
+    cart.forEach((item)=>{
+      cartQuantity += item.quantity;
+    })
+
+    document.getElementById('js-cart-quantity').innerText = cartQuantity;
   });
 });
