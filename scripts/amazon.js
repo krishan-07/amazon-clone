@@ -25,7 +25,7 @@ products.forEach((product) => {
   </div>
 
   <div class="product-quantity-container">
-    <select>
+    <select id="js-selector-${product.id}">
       <option selected value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -67,11 +67,15 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
       //here we are actualy creating a reference to matching object , so change in the matching  object can be done
     });
 
-    if (matchingItem) matchingItem.quantity += 1;
-    else cart.push({ productId: productId, quantity: 1 });
+    //getting the quantity by dropdown selector
+    const quantity = Number( document.getElementById(`js-selector-${productId}`).value);
     
-    //updating total cart quatity
-    cartQuantity = 0;
+    //updating the cart 
+    if (matchingItem) matchingItem.quantity += quantity;
+    else cart.push({ productId: productId, quantity: quantity });
+    
+    //updating the total cart quatity
+    let cartQuantity = 0;
     cart.forEach((item)=>{
       cartQuantity += item.quantity;
     })
