@@ -1,5 +1,6 @@
 let productHTML = "";
 products.forEach((product) => {
+  //html generator
   productHTML += `
   <div class="product-container">
   <div class="product-image-container">
@@ -45,10 +46,30 @@ products.forEach((product) => {
     Added
   </div>
 
-  <button class="add-to-cart-button button-primary">
+  <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${
+    product.id
+  }">
     Add to Cart
   </button>
 </div>`;
 });
-
+//putting html into he webpage
 document.getElementById("js-product-grid").innerHTML = productHTML;
+
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
+
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if (productId === item.productId) matchingItem = item;
+      //here we are actualy creating a reference to matching object , so change in the matching  object can be done
+    });
+
+    if (matchingItem) matchingItem.quantity += 1;
+    else cart.push({ productId: productId, quantity: 1 });
+    console.log(matchingItem);
+    console.log(cart);
+  });
+});
