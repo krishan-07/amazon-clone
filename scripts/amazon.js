@@ -1,4 +1,5 @@
- import { cart } from "../data/cart";
+import { cart } from "../data/cart";
+import { products } from "../data/products";
 
 let productHTML = "";
 products.forEach((product) => {
@@ -56,13 +57,13 @@ products.forEach((product) => {
 </div>`;
 });
 //putting html into he webpage
-document.getElementById('js-product-grid').innerHTML = productHTML;
+document.getElementById("js-product-grid").innerHTML = productHTML;
 
-document.querySelectorAll('.js-add-to-cart').forEach((button) => {
-let addedButtonTimeoutId;
-  button.addEventListener('click', () => {
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  let addedButtonTimeoutId;
+  button.addEventListener("click", () => {
     // const productId = button.dataset.productId;
-    const{productId} = button.dataset;
+    const { productId } = button.dataset;
     let matchingItem;
 
     cart.forEach((item) => {
@@ -85,16 +86,18 @@ let addedButtonTimeoutId;
       cartQuantity += item.quantity;
     });
 
-    document.getElementById('js-cart-quantity').innerText = cartQuantity;
+    document.getElementById("js-cart-quantity").innerText = cartQuantity;
 
     //making added to cart visible on click
-    const addedToCart = document.getElementById(`js-added-to-cart-${productId}`);
-    addedToCart.classList.add('added-to-cart-visible');
+    const addedToCart = document.getElementById(
+      `js-added-to-cart-${productId}`
+    );
+    addedToCart.classList.add("added-to-cart-visible");
 
-    if(addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
+    if (addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
 
     let timeoutId = setTimeout(() => {
-    addedToCart.classList.remove('added-to-cart-visible');
+      addedToCart.classList.remove("added-to-cart-visible");
     }, 2000);
 
     addedButtonTimeoutId = timeoutId;
