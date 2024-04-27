@@ -1,5 +1,5 @@
-import { cart } from "../data/cart";
-import { products } from "../data/products";
+import { cart, addToCart } from "../data/cart.js";
+import { products } from "../data/products.js";
 
 let productHTML = "";
 products.forEach((product) => {
@@ -56,50 +56,42 @@ products.forEach((product) => {
   </button>
 </div>`;
 });
+
 //putting html into he webpage
 document.getElementById("js-product-grid").innerHTML = productHTML;
 
+//updating the total cart quatity
+function updateCart() {
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  document.getElementById("js-cart-quantity").innerText = cartQuantity;
+}
+
+//making added to cart visible on click
+function addedToCart(productId, addedButtonTimeoutId) {
+  const addedToCart = document.getElementById(`js-added-to-cart-${productId}`);
+  addedToCart.classList.add("added-to-cart-visible");
+
+  if (addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
+
+  let timeoutId = setTimeout(() => {
+    addedToCart.classList.remove("added-to-cart-visible");
+  }, 2000);
+
+  addedButtonTimeoutId = timeoutId;
+  return addedButtonTimeoutId;
+}
+
+//adding event lisenter to all add to cart buttons
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   let addedButtonTimeoutId;
   button.addEventListener("click", () => {
     // const productId = button.dataset.productId;
     const { productId } = button.dataset;
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) matchingItem = item;
-      //here we are actualy creating a reference to matching object , so change in the matching  object can be done
-    });
-
-    //getting the quantity by dropdown selector
-    const quantity = Number(
-      document.getElementById(`js-selector-${productId}`).value
-    );
-
-    //updating the cart
-    if (matchingItem) matchingItem.quantity += quantity;
-    else cart.push({ productId: productId, quantity: quantity });
-
-    //updating the total cart quatity
-    let cartQuantity = 0;
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-
-    document.getElementById("js-cart-quantity").innerText = cartQuantity;
-
-    //making added to cart visible on click
-    const addedToCart = document.getElementById(
-      `js-added-to-cart-${productId}`
-    );
-    addedToCart.classList.add("added-to-cart-visible");
-
-    if (addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
-
-    let timeoutId = setTimeout(() => {
-      addedToCart.classList.remove("added-to-cart-visible");
-    }, 2000);
-
-    addedButtonTimeoutId = timeoutId;
+    addToCart(productId);
+    updateCart();
+    addedButtonTimeoutId = addedToCart(productId, addedButtonTimeoutId);
   });
 });
