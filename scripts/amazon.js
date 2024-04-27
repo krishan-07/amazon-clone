@@ -1,3 +1,5 @@
+ import { cart } from "../data/cart";
+
 let productHTML = "";
 products.forEach((product) => {
   //html generator
