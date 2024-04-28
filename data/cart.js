@@ -45,3 +45,10 @@ export function removeFromCart(productId) {
   });
   saveToStorage();
 }
+
+export function updateCartQuantity(cartQuantity){
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  return cartQuantity;
+}
