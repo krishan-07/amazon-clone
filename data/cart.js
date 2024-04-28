@@ -46,9 +46,31 @@ export function removeFromCart(productId) {
   saveToStorage();
 }
 
-export function updateCartQuantity(cartQuantity){
+export function updateCartQuantity(cartQuantity) {
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
   return cartQuantity;
+}
+
+//function to update single cart item in checkout page
+export function updateQuantity(productId, newQuantity) {
+  let matchingItem;
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) matchingItem = cartItem;
+  });
+
+  if (newQuantity <= 0 || newQuantity >= 1000) {
+    document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
+      matchingItem.quantity;
+    newQuantity <= 0
+      ? alert("Enter valid input")
+      : alert("Quantity should be less than 1000");
+    return;
+  } else {
+    matchingItem.quantity = newQuantity;
+    document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
+      matchingItem.quantity;
+  }
+  saveToStorage();
 }
