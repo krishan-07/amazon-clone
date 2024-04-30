@@ -137,6 +137,7 @@ export function renderOrderSummary() {
       removeFromCart(productId);
       container.remove();
       updateCart();
+      renderPaymentSummary();
     });
   });
 
@@ -194,6 +195,7 @@ export function renderOrderSummary() {
       const { productId, deliveryOptionId } = element.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
