@@ -1,4 +1,4 @@
-import { cart, updateCartQuantity } from "../../data/cart.js";
+import { cart,updateCartQuantity } from "../../data/cart.js";
 import { getProducts } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveyOptions.js";
 import formatCurrency from "../utils/money.js";
@@ -26,23 +26,17 @@ export function renderPaymentSummary() {
 
     <div class="payment-summary-row">
     <div>Items (${cartQuantity}):</div>
-    <div class="payment-summary-money">$${formatCurrency(
-      productPriceCents
-    )}</div>
+    <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
     </div>
 
     <div class="payment-summary-row">
     <div>Shipping &amp; handling:</div>
-    <div class="payment-summary-money">$${formatCurrency(
-      ShippingPriceCents
-    )}</div>
+    <div class="payment-summary-money">$${formatCurrency(ShippingPriceCents)}</div>
     </div>
 
     <div class="payment-summary-row subtotal-row">
     <div>Total before tax:</div>
-    <div class="payment-summary-money">$${formatCurrency(
-      totalBeforeTaxCents
-    )}</div>
+    <div class="payment-summary-money">$${formatCurrency(totalBeforeTaxCents)}</div>
     </div>
 
     <div class="payment-summary-row">
@@ -60,5 +54,5 @@ export function renderPaymentSummary() {
     </button>
   `;
 
-  document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
+  document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 }
