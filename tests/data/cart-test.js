@@ -1,6 +1,18 @@
 import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
 
 describe("test suite: addToCart", () => {
+
+  beforeEach(() => {
+    document.querySelector(".js-test-container").innerHTML = `
+  <input id="js-selector-e43638ce-6aa0-4b85-b27f-e1d07eb678c6" value="1" ;">
+    `;
+  });
+
+  afterEach(() => {
+    document.querySelector(".js-test-container").innerHTML = `
+    `;
+  });
+
   it("adds an existing product to the cart", () => {
     spyOn(Storage.prototype, "setItem");
 

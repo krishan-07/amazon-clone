@@ -33,10 +33,9 @@ export function addToCart(productId) {
   });
 
   //getting the quantity by dropdown selector and changing to number
-  const quantity = 1;
-  //  Number(
-  //   document.getElementById(`js-selector-${productId}`).value
-  // );
+  const quantity = Number(
+    document.getElementById(`js-selector-${productId}`).value
+  );
 
   //updating the cart
   if (matchingItem) matchingItem.quantity += quantity;
