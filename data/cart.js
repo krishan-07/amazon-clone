@@ -35,9 +35,11 @@ export function addToCart(productId) {
   });
 
   //getting the quantity by dropdown selector and changing to number
-  const quantity = Number(
-    document.getElementById(`js-selector-${productId}`).value
-  );
+  let quantity;
+  if (document.getElementById(`js-selector-${productId}`) === null)
+    quantity = 1;
+  else
+    quantity = Number(document.getElementById(`js-selector-${productId}`).value);
 
   //updating the cart
   if (matchingItem) matchingItem.quantity += quantity;
