@@ -1,4 +1,4 @@
-import { loadFromStorage, updateCartQuantity, cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import { getProducts, products } from "../../data/products.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
 import formatCurrency from "../../scripts/utils/money.js";
@@ -15,24 +15,18 @@ describe("test suite : renderOrderSummary", () => {
     `;
 
     spyOn(Storage.prototype, "setItem");
-    spyOn(Storage.prototype, "getItem").and.callFake(() => {
-      return JSON.stringify([
-        {
-          productId: productId1,
-          quantity: 1,
-          deliveryOptionId: "1",
-        },
-        {
-          productId: productId2,
-          quantity: 2,
-          deliveryOptionId: "2",
-        },
-      ]);
-    });
-    loadFromStorage();
+    cart.cartItem = [{
+      productId: productId1,
+      quantity: 2,
+      deliveryOptionId: '1'
+    }, {
+      productId: productId2,
+      quantity: 1,
+      deliveryOptionId: '2'
+    }];
 
-    cartQuantity = updateCartQuantity(cartQuantity);
-    cart.forEach((cartItem) => {
+    cartQuantity = cart.updateCartQuantity(cartQuantity);
+    cart.cartItem.forEach((cartItem) => {
       const product = getProducts(cartItem.productId);
       productPriceCents += product.priceCents * cartItem.quantity;
     });

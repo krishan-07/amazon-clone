@@ -54,7 +54,7 @@ class Cart {
       this.cartItem.push({
         productId: productId,
         quantity: quantity,
-        deliveryOptions: "1",
+        deliveryOptionId: "1",
       });
 
     this.saveToStorage();
@@ -116,9 +116,5 @@ class Cart {
   }
 }
 
-const cart = new Cart("cart-oop");
-const businessCart = new Cart("cart-business");
-
-cart.addToCart("83d4ca15-0f35-48f5-b7a3-1ea210004f2e");
+export const cart = new Cart("cart");
 console.log(cart);
-console.log(businessCart);

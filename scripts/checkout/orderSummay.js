@@ -1,10 +1,4 @@
-import {
-  cart,
-  removeFromCart,
-  updateCartQuantity,
-  updateQuantity,
-  updateDeliveryOption,
-} from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import {
   deliveryOptions,
   getDeliveryOption,
@@ -17,7 +11,7 @@ import formatCurrency from "../utils/money.js";
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
-  cart.forEach((cartItem) => {
+  cart.cartItem.forEach((cartItem) => {
     const { productId } = cartItem;
     const matchingProduct = getProducts(productId);
 
@@ -98,7 +92,9 @@ export function renderOrderSummary() {
             <input type="radio"
               ${isChecked ? "checked" : ""}
               class="delivery-option-input
-              js-delivery-option-input-${matchingProduct.id}-${deliveryOption.id}"
+              js-delivery-option-input-${matchingProduct.id}-${
+        deliveryOption.id
+      }"
               name="delivery-option-${matchingProduct.id}">
             <div>
               <div class="delivery-option-date">
@@ -120,7 +116,7 @@ export function renderOrderSummary() {
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
-      removeFromCart(productId);
+      cart.removeFromCart(productId);
 
       renderCheckoutHeader();
       renderPaymentSummary();
@@ -147,7 +143,7 @@ export function renderOrderSummary() {
           const newProductQuantity = Number(productQuantity.value);
           productQuantity.value = "";
 
-          updateQuantity(productId, newProductQuantity);
+          cart.updateQuantity(productId, newProductQuantity);
           renderCheckoutHeader();
           renderPaymentSummary();
           container.classList.remove("is-editing-quantity");
@@ -172,7 +168,7 @@ export function renderOrderSummary() {
       const newProductQuantity = Number(productQuantity.value);
       productQuantity.value = "";
 
-      updateQuantity(productId, newProductQuantity);
+      cart.updateQuantity(productId, newProductQuantity);
       renderCheckoutHeader();
       renderPaymentSummary();
     });
@@ -182,7 +178,7 @@ export function renderOrderSummary() {
   document.querySelectorAll(".js-delivery-option").forEach((element) => {
     element.addEventListener("click", () => {
       const { productId, deliveryOptionId } = element.dataset;
-      updateDeliveryOption(productId, deliveryOptionId);
+      cart.updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
       renderPaymentSummary();
     });
