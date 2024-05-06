@@ -1,5 +1,5 @@
 import { cart } from "../../data/cart-class.js";
-import { getProducts, products } from "../../data/products.js";
+import { getProducts, products, loadProducts } from "../../data/products.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
 import formatCurrency from "../../scripts/utils/money.js";
 
@@ -9,21 +9,31 @@ describe("test suite : renderOrderSummary", () => {
   let cartQuantity = 0;
   let productPriceCents = 0;
 
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
+  
+
   beforeEach(() => {
     document.querySelector(".js-test-container").innerHTML = `
     <div class="js-payment-summary"></div>
     `;
 
     spyOn(Storage.prototype, "setItem");
-    cart.cartItem = [{
-      productId: productId1,
-      quantity: 2,
-      deliveryOptionId: '1'
-    }, {
-      productId: productId2,
-      quantity: 1,
-      deliveryOptionId: '2'
-    }];
+    cart.cartItem = [
+      {
+        productId: productId1,
+        quantity: 2,
+        deliveryOptionId: "1",
+      },
+      {
+        productId: productId2,
+        quantity: 1,
+        deliveryOptionId: "2",
+      },
+    ];
 
     cartQuantity = cart.updateCartQuantity(cartQuantity);
     cart.cartItem.forEach((cartItem) => {
