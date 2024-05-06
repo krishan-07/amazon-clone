@@ -117,4 +117,4 @@ class Cart {
 }
 
 export const cart = new Cart("cart");
-console.log(cart);
+

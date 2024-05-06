@@ -1,10 +1,13 @@
 import { cart } from "../data/cart-class.js";
-import { products } from "../data/products.js";
+import { products, loadProducts } from "../data/products.js";
 
-let productHTML = "";
-products.forEach((product) => {
-  //html generator
-  productHTML += `
+loadProducts(renderProductsGrid);
+
+function renderProductsGrid() {
+  let productHTML = "";
+  products.forEach((product) => {
+    //html generator
+    productHTML += `
   <div class="product-container">
   <div class="product-image-container">
     <img class="product-image"
@@ -56,42 +59,45 @@ products.forEach((product) => {
     Add to Cart
   </button>
 </div>`;
-});
-
-//putting html into he webpage
-document.getElementById("js-product-grid").innerHTML = productHTML;
-
-//updating the total cart quatity
-function updateCart() {
-  let cartQuantity = 0;
-  cartQuantity = cart.updateCartQuantity(cartQuantity);
-  document.getElementById("js-cart-quantity").innerText = cartQuantity;
-}
-updateCart();
-
-//making added to cart visible on click
-function addedToCart(productId, addedButtonTimeoutId) {
-  const addedToCart = document.getElementById(`js-added-to-cart-${productId}`);
-  addedToCart.classList.add("added-to-cart-visible");
-
-  if (addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
-
-  let timeoutId = setTimeout(() => {
-    addedToCart.classList.remove("added-to-cart-visible");
-  }, 2000);
-
-  addedButtonTimeoutId = timeoutId;
-  return addedButtonTimeoutId;
-}
-
-//adding event lisenter to all add to cart buttons
-document.querySelectorAll(".js-add-to-cart").forEach((button) => {
-  let addedButtonTimeoutId;
-  button.addEventListener("click", () => {
-    // const productId = button.dataset.productId;
-    const { productId } = button.dataset;
-    cart.addToCart(productId);
-    updateCart();
-    addedButtonTimeoutId = addedToCart(productId, addedButtonTimeoutId);
   });
-});
+
+  //putting html into he webpage
+  document.getElementById("js-product-grid").innerHTML = productHTML;
+
+  //updating the total cart quatity
+  function updateCart() {
+    let cartQuantity = 0;
+    cartQuantity = cart.updateCartQuantity(cartQuantity);
+    document.getElementById("js-cart-quantity").innerText = cartQuantity;
+  }
+  updateCart();
+
+  //making added to cart visible on click
+  function addedToCart(productId, addedButtonTimeoutId) {
+    const addedToCart = document.getElementById(
+      `js-added-to-cart-${productId}`
+    );
+    addedToCart.classList.add("added-to-cart-visible");
+
+    if (addedButtonTimeoutId) clearTimeout(addedButtonTimeoutId);
+
+    let timeoutId = setTimeout(() => {
+      addedToCart.classList.remove("added-to-cart-visible");
+    }, 2000);
+
+    addedButtonTimeoutId = timeoutId;
+    return addedButtonTimeoutId;
+  }
+
+  //adding event lisenter to all add to cart buttons
+  document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+    let addedButtonTimeoutId;
+    button.addEventListener("click", () => {
+      // const productId = button.dataset.productId;
+      const { productId } = button.dataset;
+      cart.addToCart(productId);
+      updateCart();
+      addedButtonTimeoutId = addedToCart(productId, addedButtonTimeoutId);
+    });
+  });
+}
