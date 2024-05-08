@@ -1,16 +1,12 @@
 import { renderOrderSummary } from "./checkout/orderSummay.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
-import { loadProducts } from "../data/products.js";
+import { loadProductsFetch, loadProducts } from "../data/products.js";
 // import "../data/cart-class.js"
 // import "../data/backend-practice.js"
 
-new Promise((resolve) => {
-  loadProducts(() => {
-    resolve();
-  });
-
-}).then(() => {
+loadProductsFetch().then((value) => {
+  // console.log(value);
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
@@ -23,3 +19,5 @@ loadProducts(() => {
   renderPaymentSummary();
 });
 */
+
+//we can group promises using Promise.all() method and then(values) method can get an array of values from different resolve

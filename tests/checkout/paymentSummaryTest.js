@@ -1,5 +1,5 @@
 import { cart } from "../../data/cart-class.js";
-import { getProducts, products, loadProducts } from "../../data/products.js";
+import { getProducts, products, loadProducts, loadProductsFetch } from "../../data/products.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
 import formatCurrency from "../../scripts/utils/money.js";
 
@@ -10,10 +10,10 @@ describe("test suite : renderOrderSummary", () => {
   let productPriceCents = 0;
 
   beforeAll((done) => {
-    loadProducts(() => {
+    loadProductsFetch().then(() => {
       done();
-    });
-  });
+    })
+  }); 
   
 
   beforeEach(() => {
