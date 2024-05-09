@@ -35,4 +35,4 @@ loadProducts(() => {
 });
 */
 
-//we can group promises using Promise.all() method and then(values) method can get an array of values from different resolve
+//we can group promises using Promise.all() method and then(values) method can get an array of values from different resolve and it takes an array of promises
