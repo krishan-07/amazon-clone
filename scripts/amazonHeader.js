@@ -1,5 +1,7 @@
 
 export function loadHeader() {
+
+
     const headerHTML = `
     <div class="amazon-header-left-section">
         <a href="amazon.html" class="header-link">
@@ -11,9 +13,9 @@ export function loadHeader() {
       </div>
 
       <div class="amazon-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search ">
+        <input class="search-bar js-search-bar" type="text" placeholder="Search ">
 
-        <button class="search-button">
+        <button class="search-button js-search-btn">
           <img class="search-icon" src="images/icons/search-icon.png">
         </button>
       </div>
@@ -32,7 +34,18 @@ export function loadHeader() {
       </div>
     `
     document.querySelector('.js-amazon-header').innerHTML = headerHTML;
-      
+
+    document.querySelector('.js-search-bar').addEventListener('keydown', (event) =>{
+      if(event.key === "Enter") searchBtn.click();
+    })
+
+   const searchBtn = document.querySelector('.js-search-btn');
+   searchBtn.addEventListener('click',()=>{
+      const search = document.querySelector('.js-search-bar');
+      const searchItem = search.value;
+      search.value = '';
+      window.location.href = `amazon.html?search=${searchItem}`
+    })
 }
 
 loadHeader();
