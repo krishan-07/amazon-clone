@@ -19,7 +19,7 @@ export function updateCart() {
 export function loadHeader() {
   const headerHTML = `
     <div class="amazon-header-left-section">
-        <a href="amazon.html" class="header-link">
+        <a href="index.html" class="header-link">
           <img class="amazon-logo"
             src="images/amazon-logo-white.png">
           <img class="amazon-mobile-logo"
@@ -61,7 +61,7 @@ export function loadHeader() {
     const search = document.querySelector(".js-search-bar");
     const searchItem = search.value;
     search.value = "";
-    window.location.href = `amazon.html?search=${searchItem}`;
+    window.location.href = `index.html?search=${searchItem}`;
   });
 }
 
