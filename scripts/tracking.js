@@ -1,6 +1,10 @@
-import { loadProductsFetch, getProducts, products } from "../data/products.js";
+import { loadProductsFetch, getProducts } from "../data/products.js";
 import { getOrders } from "../data/orders.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { cart } from "../data/cart-class.js";
+import { loadHeader } from "./amazonHeader.js";
+
+loadHeader();
 
 async function loadPage() {
   await loadProductsFetch();
@@ -63,6 +67,13 @@ async function loadPage() {
 </div>`;
 
   document.querySelector(".main").innerHTML = trackingHTML;
+
+  function updateCart() {
+    let cartQuantity = 0;
+    cartQuantity = cart.updateCartQuantity(cartQuantity);
+    document.getElementById("js-cart-quantity").innerText = cartQuantity;
+  }
+  updateCart()
 }
 
 loadPage();

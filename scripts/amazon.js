@@ -1,6 +1,8 @@
 import { cart } from "../data/cart-class.js";
 import { products, loadProducts } from "../data/products.js";
+import { loadHeader } from "./amazonHeader.js";
 
+loadHeader();
 loadProducts(renderProductsGrid);
 
 function renderProductsGrid() {

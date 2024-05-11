@@ -3,8 +3,9 @@ import { getProducts, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import formatCurrency from "./utils/money.js";
+import { loadHeader } from "./amazonHeader.js";
 
-console.log(orders);
+loadHeader();
 
 async function loadPage() {
   let ordersHTML = "";
@@ -86,7 +87,9 @@ async function loadPage() {
   document.querySelectorAll(".js-buy-again").forEach((button) => {
     button.addEventListener("click", () => {
       cart.addToCart(button.dataset.productId);
-      button.innerHTML = 'Added';
+      updateCart();
+
+      button.innerHTML = "Added";
       setTimeout(() => {
         button.innerHTML = `
           <img class="buy-again-icon" src="images/icons/buy-again.png">
@@ -95,5 +98,13 @@ async function loadPage() {
       }, 1000);
     });
   });
+
+  //updating the total cart quatity
+  function updateCart() {
+    let cartQuantity = 0;
+    cartQuantity = cart.updateCartQuantity(cartQuantity);
+    document.getElementById("js-cart-quantity").innerText = cartQuantity;
+  }
+  updateCart()
 }
 loadPage();
