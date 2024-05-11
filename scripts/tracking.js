@@ -2,7 +2,7 @@ import { loadProductsFetch, getProducts } from "../data/products.js";
 import { getOrders } from "../data/orders.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { cart } from "../data/cart-class.js";
-import { loadHeader } from "./amazonHeader.js";
+import { focusOnSearchBar, loadHeader, updateCart } from "./amazonHeader.js";
 
 loadHeader();
 
@@ -26,7 +26,9 @@ async function loadPage() {
   const deliveryTime = dayjs(matchingProduct.estimatedDeliveryTime);
   const percentProgress =
     ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
-    
+  const deliveryMssg =
+    currentTime > deliveryTime ? "Delivered on" : "Arriving on";
+
   const trackingHTML = `
   <div class="order-tracking">
   <a class="back-to-orders-link link-primary" href="orders.html">
@@ -34,9 +36,9 @@ async function loadPage() {
   </a>
 
   <div class="delivery-date">
-    Arriving on ${dayjs(matchingProduct.estimatedDeliveryTime).format(
-      "dddd, MMMM D"
-    )}
+    ${deliveryMssg} ${dayjs(matchingProduct.estimatedDeliveryTime).format(
+    "dddd, MMMM D"
+  )}
   </div>
 
   <div class="product-info">
@@ -50,13 +52,17 @@ async function loadPage() {
   <img class="product-image" src=${productDetails.image}>
 
   <div class="progress-labels-container">
-    <div class="progress-label ${percentProgress < 50 ? 'current-status' : ''}">
+    <div class="progress-label ${percentProgress < 50 ? "current-status" : ""}">
       Preparing
     </div>
-    <div class="progress-label ${(percentProgress > 50 && percentProgress < 100) ? 'current-status' : ''}">
+    <div class="progress-label ${
+      percentProgress > 50 && percentProgress < 100 ? "current-status" : ""
+    }">
       Shipped
     </div>
-    <div class="progress-label ${percentProgress >= 100 ? 'current-status' : ''}">
+    <div class="progress-label ${
+      percentProgress >= 100 ? "current-status" : ""
+    }">
       Delivered
     </div>
   </div>
@@ -68,12 +74,8 @@ async function loadPage() {
 
   document.querySelector(".main").innerHTML = trackingHTML;
 
-  function updateCart() {
-    let cartQuantity = 0;
-    cartQuantity = cart.updateCartQuantity(cartQuantity);
-    document.getElementById("js-cart-quantity").innerText = cartQuantity;
-  }
-  updateCart()
+  updateCart();
+  focusOnSearchBar();
 }
 
 loadPage();

@@ -3,7 +3,7 @@ import { getProducts, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import formatCurrency from "./utils/money.js";
-import { loadHeader } from "./amazonHeader.js";
+import { focusOnSearchBar, loadHeader, updateCart } from "./amazonHeader.js";
 
 loadHeader();
 
@@ -82,6 +82,7 @@ async function loadPage() {
     });
     return productsHTML;
   }
+  
   document.querySelector(".js-orders-grid").innerHTML = ordersHTML;
 
   document.querySelectorAll(".js-buy-again").forEach((button) => {
@@ -99,12 +100,8 @@ async function loadPage() {
     });
   });
 
-  //updating the total cart quatity
-  function updateCart() {
-    let cartQuantity = 0;
-    cartQuantity = cart.updateCartQuantity(cartQuantity);
-    document.getElementById("js-cart-quantity").innerText = cartQuantity;
-  }
-  updateCart()
+  updateCart();
+  focusOnSearchBar();
 }
+
 loadPage();

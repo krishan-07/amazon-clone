@@ -1,6 +1,6 @@
 import { cart } from "../data/cart-class.js";
 import { products, loadProducts } from "../data/products.js";
-import { loadHeader } from "./amazonHeader.js";
+import { focusOnSearchBar, loadHeader, updateCart } from "./amazonHeader.js";
 
 loadHeader();
 loadProducts(renderProductsGrid);
@@ -93,12 +93,7 @@ function renderProductsGrid() {
   //putting html into he webpage
   document.getElementById("js-product-grid").innerHTML = productHTML;
 
-  //updating the total cart quatity
-  function updateCart() {
-    let cartQuantity = 0;
-    cartQuantity = cart.updateCartQuantity(cartQuantity);
-    document.getElementById("js-cart-quantity").innerText = cartQuantity;
-  }
+  //updating the total cart quantity
   updateCart();
 
   //making added to cart visible on click
@@ -130,11 +125,5 @@ function renderProductsGrid() {
     });
   });
 
-  document.body.addEventListener("keydown", (event) => {
-    if (event.key === "/") {
-      event.preventDefault();
-      document.querySelector(".js-search-bar").focus();
-      document.querySelector(".js-search-bar").value = "";
-    }
-  });
+  focusOnSearchBar();
 }

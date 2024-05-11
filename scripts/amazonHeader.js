@@ -1,8 +1,23 @@
+import { cart } from "../data/cart-class.js";
+
+export function focusOnSearchBar(){
+  document.body.addEventListener("keydown", (event) => {
+    if (event.key === "/") {
+      event.preventDefault();
+      document.querySelector(".js-search-bar").focus();
+      document.querySelector(".js-search-bar").value = "";
+    }
+  });
+}
+
+export function updateCart() {
+  let cartQuantity = 0;
+  cartQuantity = cart.updateCartQuantity(cartQuantity);
+  document.getElementById("js-cart-quantity").innerText = cartQuantity;
+}
 
 export function loadHeader() {
-
-
-    const headerHTML = `
+  const headerHTML = `
     <div class="amazon-header-left-section">
         <a href="amazon.html" class="header-link">
           <img class="amazon-logo"
@@ -32,20 +47,22 @@ export function loadHeader() {
           <div class="cart-text">Cart</div>
         </a>
       </div>
-    `
-    document.querySelector('.js-amazon-header').innerHTML = headerHTML;
+    `;
+  document.querySelector(".js-amazon-header").innerHTML = headerHTML;
 
-    document.querySelector('.js-search-bar').addEventListener('keydown', (event) =>{
-      if(event.key === "Enter") searchBtn.click();
-    })
+  document
+    .querySelector(".js-search-bar")
+    .addEventListener("keydown", (event) => {
+      if (event.key === "Enter") searchBtn.click();
+    });
 
-   const searchBtn = document.querySelector('.js-search-btn');
-   searchBtn.addEventListener('click',()=>{
-      const search = document.querySelector('.js-search-bar');
-      const searchItem = search.value;
-      search.value = '';
-      window.location.href = `amazon.html?search=${searchItem}`
-    })
+  const searchBtn = document.querySelector(".js-search-btn");
+  searchBtn.addEventListener("click", () => {
+    const search = document.querySelector(".js-search-bar");
+    const searchItem = search.value;
+    search.value = "";
+    window.location.href = `amazon.html?search=${searchItem}`;
+  });
 }
 
 loadHeader();
