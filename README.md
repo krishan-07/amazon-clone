@@ -1,0 +1,12 @@
+## Things learnt during this projects
+-DOM methods and properties <br>
+-Arrays method <br>
+-Modules <br>
+-Normalization of data <br>
+-Using external library(DayJs) <br>
+-MVC (Model View Control) <br>
+-Jasmine Testing Framework <br>
+-Object Oreinted Programming <br>
+-Using Backend/API <br>
+-Error Handling <br>
+-Handling Async code <br>
